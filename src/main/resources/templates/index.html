@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Colegios</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Lista de Colegios</h1>
+        
+        <!-- Formulario para agregar un nuevo colegio -->
+        <form th:action="@{/colegios}" method="post" class="mt-3">
+            <div class="form-group">
+                <label for="nombre">Nombre del Colegio</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre del colegio" required>
+            </div>
+            <button type="submit" class="btn btn-success">Agregar Colegio</button>
+        </form>
+        
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through colegios -->
+                <tr th:each="colegio : ${colegios}">
+                    <td th:text="${colegio.id}">1</td>
+                    <td th:text="${colegio.nombre}">Colegio Ejemplo</td>
+                    <td>
+                        <a th:href="@{/colegios/{id}/estudiantes(id=${colegio.id})}" class="btn btn-primary">Ver Estudiantes</a>
+                        <form th:action="@{/colegios/{id}(id=${colegio.id})}" method="post" class="d-inline" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este colegio?');">
+                            <input type="hidden" name="_method" value="delete" />
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
