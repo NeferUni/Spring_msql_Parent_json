@@ -58,7 +58,7 @@ public class StudentController {
         }
     }
 
-    @DeleteMapping("/{studentId}")
+    @PostMapping("/delete/{studentId}")
     public String delete(@PathVariable("studentId") long studentId) {
         Optional<Student> studentOptional = studentService.getStudentById(studentId);
         if (studentOptional.isPresent()) {
